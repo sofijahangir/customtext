@@ -1,0 +1,10 @@
+{
+  "projectName": "typingmaster",
+  "meta": {
+    "type": "backend"
+  },
+  "backend": {
+    "platform": "node16"
+  },
+  "hash": "e9af5b8a"
+}

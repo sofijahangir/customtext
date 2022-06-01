@@ -15,8 +15,8 @@
         <div class="row mb-4">
           <div class="col">
             <div class="form-outline">
-              <input type="text" name="title" id="filename" class="form-control" onkeyup="chkIfEmpty()" />
-              <label class="form-label" for="filename">Paragraph Title</label>
+              <input type="text" name="title" id="filename" class="form-control" />
+              <label class=" form-label" for="filename">Paragraph Title</label>
             </div>
           </div>
 
@@ -33,19 +33,141 @@
 
         <!-- Message input -->
         <div class="form-outline mb-4">
-          <textarea name="description" class="form-control" id="mytextarea" rows="4" placeholder="Detailed Paragraph"
-            onkeyup="chkIfEmpty()"></textarea>
+          <textarea name="description" class="form-control" id="mytextarea" rows="4" placeholder="Detailed Paragraph"></textarea>
           <!-- <label class="form-label" for="mytextarea">Detailed Paragraph</label> -->
         </div>
 
-        <textarea id="textarea2" name="hide" style="display:none;"></textarea>
-
-
+        <textarea cols="100" rows="10" id="textarea1" onkeyup=" chkIfEmpty()" hidden></textarea>
+        <textarea cols="100" rows="10" id="textarea2" hidden></textarea>
+        <textarea cols="100" rows="10" id="textarea3" hidden></textarea>
 
         <!-- Submit button -->
-        <button type="submit" id="btn" class="btn btn-primary btn-block mb-4">Create Paragraph</button>
+        <button type="submit" id="btn" class="btn btn-primary btn-block mb-4">Create / Download</button>
       </form>
     </div>
   </main>
+
+  <script type="text/javascript">
+
+    var intervalId = window.setInterval(function () {
+      /// call your function here
+      chkIfEmpty();
+    }, 2000);
+    window.onload = function () {
+      chkIfEmpty();
+    }
+  </script>
+
+  <script>
+
+    function chkIfEmpty() {
+      if ((document.getElementById("filename").value === "")) {
+        // document.getElementById('btn').disabled = true;
+      } else {
+        var str = document.getElementById('mytextarea').value;
+        str = str
+          .replace('”', '"')
+          .replace('“', '"')
+          .replace('’', "'")
+          .replace('‘', "'")
+          .replace(/[\u2018\u2019]/g, "'")
+          .replace(/[\u201C\u201D]/g, '"')
+          .replace(/[\u2013\u2014]/g, '-')
+          .replace(/[\u2026]/g, '...')
+          .replace(/(<([^>]+)>)/ig, '')
+          .replace(/&nbsp;/gi, ' ')
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          ;
+
+
+        var temp = tinymce.get('mytextarea').save();
+        // console.log(temp);
+
+        // const test1 = window.parent.tinymce.get('mytextarea').getContent();
+
+        // console.log('Hey Its me String :- ' + test1);
+
+
+
+        document.getElementById('textarea3').value = str;
+
+
+
+        const test = document.getElementById('textarea3').value
+
+        // console.log('Hey Its me Text area 3 after str op :- ' + test);
+
+
+        // document.getElementById('btn').disabled = false;
+
+      }
+
+    }
+
+    function autoReload() {
+      location.reload(true);
+    }
+
+    function download(name, text) {
+      var element = document.createElement('a');
+      element.setAttribute(
+        'href',
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+      );
+      element.setAttribute('download', name);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    }
+
+    // Start file download.
+
+    document.getElementById('btn').addEventListener(
+      'click',
+      function () {
+        // Generate download of hello.txt file with some content
+        var filename = document.getElementById('filename').value;
+
+
+        const textDesc = document.getElementById('textarea3').value;
+
+
+        var exiGen =
+          'name=' +
+          filename +
+          '\n' +
+          'description=' +
+          filename +
+          '\n' +
+          'language=eng';
+
+        var exmGen =
+          textDesc;
+
+
+        // console.log('Hey Im Exm Gen :- ' + exmGen);
+
+        document.getElementById('textarea2').value = exiGen;
+        document.getElementById('textarea3').value = exmGen;
+
+        // console.log('Hey Im Text area 3 :- ' + exmGen);
+
+
+        var text = document.getElementById('textarea3').value;
+        var text1 = document.getElementById('textarea2').value;
+
+        var exmFile = filename + '.exm';
+        var exiFile = filename + '.exi';
+
+        download(exmFile, text);
+        download(exiFile, text1);
+      },
+      false
+    );
+  </script>
 
   <%- include('../partials/footer'); %>

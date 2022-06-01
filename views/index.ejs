@@ -2,9 +2,10 @@
 <%- include('partials/header'); %>
   <!-- Include Footer -->
   <!-- Jumbotron -->
-  <div id="intro" class="p-5 text-center bg-light">
-    <h1 class="mb-3 h2">Create Custom Text For Typing Master</h1>
-    <p class="mb-3">The Best & The Easy Way</p>
+  <br>
+  <div id="intro" class="p-5  text-center bg-light">
+    <h1>Create Custom Text For Typing Master</h1>
+    <p>The Best & The Easy Way</p>
     <a class="btn btn-primary m-2" href="/create" role="button" rel="nofollow">Create
       Your Own</a>
     <a class="btn btn-primary m-2" href="/download/all" target="_blank" role="button">Download All Paragraphs</a>
@@ -42,8 +43,16 @@
 
                   <% var id=post._id; %>
 
+                    <input type="text" name="input1" id="filename" value="<%= post.title %>" onkeyup=" chkIfEmpty()" hidden>
+
+
+                    <textarea cols="100" rows="10" id="textarea1" onkeyup=" chkIfEmpty()" hidden><%= post.description %> </textarea>
+                    <textarea cols="100" rows="10" id="textarea2" hidden></textarea>
+                    <textarea cols="100" rows="10" id="textarea3" hidden></textarea>
+
                     <a href="/read/<%= id %>" class="btn btn-primary">Read</a>
                     <!-- <a href="/download/<%= id; %>" class="btn btn-primary">Download</a> -->
+                    <button id="btn" class="btn btn-primary">Download</button>
                 </div>
               </div>
             </div>
@@ -76,5 +85,117 @@
     </div>
   </main>
   <!--Main layout-->
+
+  <script type="text/javascript">
+    window.onload = function () {
+
+      chkIfEmpty();
+    }
+  </script>
+
+  <script>
+
+
+
+    function chkIfEmpty() {
+      if ((document.getElementById("filename").value === "")) {
+        document.getElementById('btn').disabled = true;
+      } else {
+        var str = document.getElementById('textarea1').value;
+        str = str
+          .replace('”', '"')
+          .replace('“', '"')
+          .replace('’', "'")
+          .replace('‘', "'")
+          .replace(/[\u2018\u2019]/g, "'")
+          .replace(/[\u201C\u201D]/g, '"')
+          .replace(/[\u2013\u2014]/g, '-')
+          .replace(/[\u2026]/g, '...')
+          .replace(/(<([^>]+)>)/ig, '')
+          .replace(/&nbsp;/gi, ' ')
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          ;
+
+        // console.log('Hey Its me String :- ' + str);
+
+        document.getElementById('textarea3').value = str;
+
+        const test = document.getElementById('textarea3').value
+
+        // console.log('Hey Its me Text area 3 after str op :- ' + test);
+
+
+        // document.getElementById('btn').disabled = false;
+
+      }
+
+    }
+
+    function autoReload() {
+      location.reload(true);
+    }
+
+    function download(name, text) {
+      var element = document.createElement('a');
+      element.setAttribute(
+        'href',
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+      );
+      element.setAttribute('download', name);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    }
+
+    // Start file download.
+
+    document.getElementById('btn').addEventListener(
+      'click',
+      function () {
+        // Generate download of hello.txt file with some content
+        var filename = document.getElementById('filename').value;
+
+
+        const textDesc = document.getElementById('textarea3').value;
+
+
+        var exiGen =
+          'name=' +
+          filename +
+          '\n' +
+          'description=' +
+          filename +
+          '\n' +
+          'language=eng';
+
+        var exmGen =
+          textDesc;
+
+
+        // console.log('Hey Im Exm Gen :- ' + exmGen);
+
+        document.getElementById('textarea2').value = exiGen;
+        document.getElementById('textarea3').value = exmGen;
+
+        // console.log('Hey Im Text area 3 :- ' + exmGen);
+
+
+        var text = document.getElementById('textarea3').value;
+        var text1 = document.getElementById('textarea2').value;
+
+        var exmFile = filename + '.exm';
+        var exiFile = filename + '.exi';
+
+        download(exmFile, text);
+        download(exiFile, text1);
+      },
+      false
+    );
+  </script>
+
 
   <%- include('partials/footer'); %>

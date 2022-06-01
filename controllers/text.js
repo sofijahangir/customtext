@@ -13,7 +13,10 @@ const addText = (req, res) => {
       // res.redirect('/create');
     }
     // res.json(text);
-    res.redirect('/');
+    // after 2 seconds redirect to the home page
+    setTimeout(() => {
+      res.redirect('/');
+    }, 2000);
   });
   // res.redirect('/');
 };

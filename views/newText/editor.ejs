@@ -1,2 +1,51 @@
 <!-- Include Header -->
 <%- include('../partials/header'); %>
+
+
+  <main class="my-2">
+    <div class="container">
+
+      <header class="text-center">
+        <p class="note note-success">
+          <strong>Create Your Own Custom Paragraph</strong>
+        </p>
+      </header>
+      <form method="POST" action="/create">
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              <input type="text" name="title" id="filename" class="form-control" onkeyup="chkIfEmpty()" />
+              <label class="form-label" for="filename">Paragraph Title</label>
+            </div>
+          </div>
+
+          <div class="col">
+            <select name="category" class="form-select" aria-label="Default select example">
+              <option selected>Choose Category</option>
+              <option value="1">General</option>
+              <option value="2">Science</option>
+              <option value="3">JK</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+          <textarea name="description" class="form-control" id="mytextarea" rows="4" placeholder="Detailed Paragraph"
+            onkeyup="chkIfEmpty()"></textarea>
+          <!-- <label class="form-label" for="mytextarea">Detailed Paragraph</label> -->
+        </div>
+
+        <textarea id="textarea2" name="hide" style="display:none;"></textarea>
+
+
+
+        <!-- Submit button -->
+        <button type="submit" id="btn" class="btn btn-primary btn-block mb-4">Create Paragraph</button>
+      </form>
+    </div>
+  </main>
+
+  <%- include('../partials/footer'); %>

@@ -9,6 +9,8 @@ const mongoDb = require('./config/db');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const textRouter = require('./routes/text');
+const downloadRouter = require('./routes/download');
 
 dotenv.config();
 mongoDb();
@@ -26,7 +28,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/', textRouter);
 app.use('/users', usersRouter);
+app.use('/', downloadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

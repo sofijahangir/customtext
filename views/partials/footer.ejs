@@ -2,20 +2,12 @@
 <!-- MDB -->
 <!--Footer-->
 <footer class="bg-light text-lg-start">
-  <div class="py-4 text-center">
-    <a role="button" class="btn btn-primary btn-lg m-2" href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" rel="nofollow"
-      target="_blank">
-      Learn Bootstrap 5
-    </a>
-    <a role="button" class="btn btn-primary btn-lg m-2" href="https://mdbootstrap.com/docs/standard/" target="_blank">
-      Download MDB UI KIT
-    </a>
-  </div>
+
 
   <hr class="m-0" />
 
   <div class="text-center py-4 align-items-center">
-    <p>Follow MDB on social media</p>
+    <p>Follow on social media</p>
     <a href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" class="btn btn-primary m-1" role="button" rel="nofollow"
       target="_blank">
       <i class="fab fa-youtube"></i>
@@ -39,6 +31,58 @@
   <!-- Copyright -->
 </footer>
 <!--Footer-->
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js"></script>
+
+<script>
+  function download(name, text) {
+    var element = document.createElement('a');
+    element.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+    );
+    element.setAttribute('download', name);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+
+  // Start file download.
+
+  document.getElementById('btn').addEventListener(
+    'click',
+    function () {
+      // Generate download of hello.txt file with some content
+      var filename = document.getElementById('filename').value;
+      // var filename = 'hello.txt';
+
+      // Check empty file name and text box;
+
+      // document.getElementById('btn').disabled = false;
+      var exiGen =
+        'name=' +
+        filename +
+        '\n' +
+        'description=' +
+        filename +
+        '\n' +
+        'language=eng';
+      document.getElementById('textarea2').value = exiGen;
+      var text = document.getElementById('textarea1').value;
+      var text1 = document.getElementById('textarea2').value;
+
+      var exmFile = filename + '.exm';
+      var exiFile = filename + '.exi';
+
+      download(exmFile, text);
+      download(exiFile, text1);
+    },
+    false
+  );
+</script>
 </body>
 </html>

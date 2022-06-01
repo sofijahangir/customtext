@@ -1,0 +1,15 @@
+Synthesizing 3/10 solutions (Duplicates hidden)
+
+=======
+
+// < !--document.getElementById('btn').disabled=true; -->
+  document.getElementById("btn").disabled = true;
+  } else {
+  document.getElementById("btn").disabled = false;
+
+  =======
+
+  // < !--document.getElementById('btn').disabled=true; -->
+    document.getElementById('btn').disabled = true;
+    } else {
+    document.getElementById('btn').disabled = false;
